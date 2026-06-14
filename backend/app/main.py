@@ -5,7 +5,7 @@ from app.config import settings
 from app.database import engine ,Base,get_db
 from app.schemas import UserCreate,UserResponse
 from app.models.user import User
-from app.utils import hash_password
+from app.utils import hash_password ,verify_password
 
 Base.metadata.create_all(bind=engine)
 
@@ -36,3 +36,21 @@ def register(user_data:UserCreate,db:Session=Depends(get_db)):
     db.refresh(new_user)
 
     return new_user
+
+@app.post("/api/auth/login",response_model=UserResponse)
+def login(user_data:UserCreate,db:Session=Depends(get_db)):
+    # hash_pw=hash_password()
+    user=db.query(User).filter(User.email==user_data.email).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid Crediantials!!"
+        )
+    
+    if not verify_password(user_data.password,user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid Crediantials!!"
+        )
+    
+    return user
