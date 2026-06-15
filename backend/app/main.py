@@ -3,9 +3,10 @@ from sqlalchemy.orm import Session
 
 from app.config import settings
 from app.database import engine ,Base,get_db
-from app.schemas import UserCreate,UserResponse
+from app.schemas import UserCreate,UserResponse ,UserLogin
 from app.models.user import User
-from app.utils import hash_password ,verify_password
+from app.utils import hash_password ,verify_password,create_access_token
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -37,8 +38,8 @@ def register(user_data:UserCreate,db:Session=Depends(get_db)):
 
     return new_user
 
-@app.post("/api/auth/login",response_model=UserResponse)
-def login(user_data:UserCreate,db:Session=Depends(get_db)):
+@app.post("/api/auth/login",status_code=status.HTTP_200_OK)
+def login(user_data:UserLogin,db:Session=Depends(get_db)):
     # hash_pw=hash_password()
     user=db.query(User).filter(User.email==user_data.email).first()
     if not user:
@@ -52,5 +53,14 @@ def login(user_data:UserCreate,db:Session=Depends(get_db)):
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Invalid Crediantials!!"
         )
-    
-    return user
+    token_data={"user_id":user.id,"email":user.email}
+    access_token=create_access_token(data=token_data)
+    return {
+        "token":access_token,
+        "token_type":"bearer",
+        "user":{
+            "id": user.id,
+            "name": user.name,
+            "email": user.email
+        }
+    }
