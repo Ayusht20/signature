@@ -9,3 +9,6 @@ passlib[bcrypt]==1.7.4
 bcrypt==4.0.1
 pyjwt==2.8.0
 python-multipart==0.0.9
+pyuploadcare==5.0.1
+requests==2.32.3
+PyMuPDF==1.24.5
