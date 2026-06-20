@@ -1,4 +1,5 @@
 from sqlalchemy import Integer,String,Column ,DateTime
+from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.database import Base 
 
@@ -11,4 +12,6 @@ class User(Base):
     hashed_password=Column(String,nullable=False)
     created_at=Column(DateTime,default=datetime.utcnow)
 
+    # Relationship: Links down to all documents owned by this user
+    documents = relationship("Documents", back_populates="owner", cascade="all, delete-orphan")
 
