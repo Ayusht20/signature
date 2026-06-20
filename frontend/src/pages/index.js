@@ -15,7 +15,7 @@ export default function AuthGate() {
     try {
       let response;
       if (isRegister) {
-        response = await fetch(`http://127.0.0.1:8000${endpoint}`, {
+        response = await fetch(`https://ayushtrilokchandani-signature.hf.space/${endpoint}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
@@ -26,7 +26,7 @@ export default function AuthGate() {
         formBody.append('username', formData.email);
         formBody.append('password', formData.password);
 
-        response = await fetch('http://127.0.0.1:8000/api/auth/login', {
+        response = await fetch('https://ayushtrilokchandani-signature.hf.space/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: formBody,

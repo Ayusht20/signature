@@ -8,6 +8,9 @@ export default function Dashboard() {
   const [documents, setDocuments] = useState([]);
   const [uploadFile, setUploadFile] = useState(null);
 
+  // 🚀 LIVE BACKEND PRODUCTION ENDPOINT WIRING:
+  const API_BASE = 'https://ayushtrilokchandani-signature.hf.space';
+
   useEffect(() => {
     const savedToken = localStorage.getItem('token');
     if (!savedToken) {
@@ -20,7 +23,7 @@ export default function Dashboard() {
 
   const loadDocuments = async (authToken) => {
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/docs', {
+      const res = await fetch(`${API_BASE}/api/docs`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       });
       const data = await res.json();
@@ -44,7 +47,7 @@ export default function Dashboard() {
     formData.append('file', uploadFile);
 
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/docs/upload', {
+      const res = await fetch(`${API_BASE}/api/docs/upload`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData,
@@ -120,17 +123,17 @@ export default function Dashboard() {
                         Open Editor ↗
                       </button>
                     ) : (
-                      /* 🚀 THE UX UPGRADE: Show both View and Download options once signed */
+                      /* 🚀 THE UX UPGRADE: Pointing to production api links */
                       <div className="flex items-center gap-2">
                         <button 
-                          onClick={() => window.open(`http://127.0.0.1:8000/api/docs/download/${doc.id}`, '_blank')}
+                          onClick={() => window.open(`${API_BASE}/api/docs/download/${doc.id}`, '_blank')}
                           className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl font-bold transition text-xs shadow-md inline-flex items-center gap-1.5"
                         >
                           👁️ View PDF
                         </button>
                         
                         <a 
-                          href={`http://127.0.0.1:8000/api/docs/download/${doc.id}?export=true`}
+                          href={`${API_BASE}/api/docs/download/${doc.id}?export=true`}
                           download
                           className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-bold transition text-xs shadow-md inline-flex items-center gap-1.5"
                         >
@@ -145,7 +148,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* SECURE COMPONENT MOUNT */}
+        {/* SECURE COMPONENT MOUNT WITH TOKEN PASSING */}
         {token && <AuditLogRegistry token={token} />}
 
       </main>

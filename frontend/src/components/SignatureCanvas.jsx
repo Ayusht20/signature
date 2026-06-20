@@ -183,7 +183,7 @@ export default function SignatureCanvas({ docId, token, onComplete }) {
 
     try {
       const resPlot = await fetch(
-        `http://127.0.0.1:8000/api/signatures?doc_id=${docId}&x=${coords.x}&y=${coords.y}&page=${targetPage}&ip_address=${userIp}`,
+        `https://ayushtrilokchandani-signature.hf.space/api/signatures?doc_id=${docId}&x=${coords.x}&y=${coords.y}&page=${targetPage}&ip_address=${userIp}`,
         {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
@@ -193,7 +193,7 @@ export default function SignatureCanvas({ docId, token, onComplete }) {
       if (!resPlot.ok) throw new Error('Failed to save signature.');
 
       const resFinal = await fetch(
-        `http://127.0.0.1:8000/api/signatures/finalize?doc_id=${docId}`,
+        `https://ayushtrilokchandani-signature.hf.space/api/signatures/finalize?doc_id=${docId}`,
         { method: 'POST', headers: { 'Authorization': `Bearer ${token}` } }
       );
       if (!resFinal.ok) throw new Error('Failed to finalize PDF.');
@@ -210,7 +210,7 @@ export default function SignatureCanvas({ docId, token, onComplete }) {
 
 const pdfUrl = cacheBuster
     ? {
-        url: `http://127.0.0.1:8000/api/docs/download/${docId}?t=${cacheBuster}`,
+        url: `https://ayushtrilokchandani-signature.hf.space/api/docs/download/${docId}?t=${cacheBuster}`,
         headers: { 'Authorization': `Bearer ${token}` }
       }
     : null;

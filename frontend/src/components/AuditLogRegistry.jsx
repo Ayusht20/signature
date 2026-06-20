@@ -6,7 +6,7 @@ export default function AuditLogRegistry({ token }) {
 
   useEffect(() => {
     // 🚀 Fetch all historic tracking records directly from your backend endpoints
-    fetch('http://127.0.0.1:8000/api/signatures/logs', {
+    fetch('https://ayushtrilokchandani-signature.hf.space/api/signatures/logs', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
