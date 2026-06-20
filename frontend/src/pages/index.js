@@ -15,7 +15,7 @@ export default function AuthGate() {
     try {
       let response;
       if (isRegister) {
-        response = await fetch(`https://ayushtrilokchandani-signature.hf.space/${endpoint}`, {
+        response = await fetch(`https://ayushtrilokchandani-signature.hf.space${endpoint}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
