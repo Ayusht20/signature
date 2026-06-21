@@ -10,6 +10,9 @@ Traditional paper-based approvals are slow, difficult to manage, and vulnerable 
 
 Users can upload documents, position signatures with pixel-level accuracy, embed custom fonts directly into PDFs, and maintain verifiable activity records for compliance and tracking.
 
+Live Links:
+Frontend:https://signature-kohl.vercel.app
+Backend:https://huggingface.co/spaces/ayushTrilokchandani/signature
 ---
 
 ## ✨ Features
